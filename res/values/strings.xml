@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Main!</string>
+    <string name="app_name">MoneyManager</string>
+    <string name="main_title">Money Manager</string>
+    <string name="update_title">Update spending</string>
+    <string name="list_label">List Activity</string>
+    <string name="update_label">Update Activity</string>
+    <string name="about_label">About</string>
+    <string name="exit_label">Exit</string>
+    <string name="about_title">About Money Manager</string> 
+    <string name="about_text">\<i>Money Manager</i> is a small app that can help you manage your spending.</string>
+    <string name="activity_hint">enter activity here</string>
+    <string name="spend_edit">Money</string>
+    
+</resources>
