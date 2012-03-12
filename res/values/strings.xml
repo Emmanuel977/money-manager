@@ -12,5 +12,5 @@
     <string name="about_text">\<i>Money Manager</i> is a small app that can help you manage your spending.</string>
     <string name="activity_hint">enter activity here</string>
     <string name="spend_edit">Money</string>
-    
+    <string name="Add_label">Add new</string>
 </resources>
