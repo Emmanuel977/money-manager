@@ -13,8 +13,8 @@ public class DBAdapter {
 	public static String TAG = "HUNGDD";
 
 	// Fields name
-	public static final String KEY_ID = "id";
-	public static final String KEY_ACTIVITY = "activity";
+	public static final String KEY_ID = "_id";
+	public static final String KEY_ACTIVITY_NAME = "activityName";
 	public static final String KEY_ACTIVITY_DATE = "activityDate";
 	public static final String KEY_ACTIVITY_MONEY = "activityMoney";
 
@@ -24,8 +24,8 @@ public class DBAdapter {
 	private static final int DATABASE_VERSION = 2;
 
 	// create database statement
-	private static final String DATABASE_CREATE = "create table tblActivity (id integer primary key autoincrement, "
-			+ "activity text not null, activityDate text not null, activityMoney int);";
+	private static final String DATABASE_CREATE = "create table tblActivity (_id integer primary key autoincrement, "
+			+ "activityName text not null, activityDate text not null, activityMoney int);";
 
 	private final Context mContext;
 	private SQLiteDatabase mDB;
@@ -64,12 +64,13 @@ public class DBAdapter {
 			int money) {
 		ContentValues initialValue = new ContentValues();
 
-		initialValue.put(KEY_ACTIVITY, activityName);
+		initialValue.put(KEY_ACTIVITY_NAME, activityName);
 		initialValue.put(KEY_ACTIVITY_DATE, activityDate);
 		initialValue.put(KEY_ACTIVITY_MONEY, money);
 
+		long rowID = mDB.insert(DATABASE_TABLE, null, initialValue);
 		// return rowID
-		return mDB.insert(DATABASE_TABLE, null, initialValue);
+		return rowID;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class DBAdapter {
 	 * @return Cursor object.
 	 */
 	public Cursor getAllActivity() {
-		return mDB.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_ACTIVITY,
+		return mDB.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_ACTIVITY_NAME,
 				KEY_ACTIVITY_DATE, KEY_ACTIVITY_MONEY }, null, null, null,
 				null, null);
 	}
@@ -113,6 +114,7 @@ public class DBAdapter {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(DATABASE_CREATE);
+			Log.i(TAG, "DB created");
 		}
 
 		@Override
