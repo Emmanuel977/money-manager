@@ -29,6 +29,12 @@ public class Main extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
+		// list button
+		case R.id.list_button:
+			Intent listIntent = new Intent(this, List.class);
+			startActivity(listIntent);
+			break;
+
 		// update button
 		case R.id.update_button:
 			Intent updateIntent = new Intent(this, UpdateActivity.class);
