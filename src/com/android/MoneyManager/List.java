@@ -21,7 +21,7 @@ public class List extends ListActivity {
 	private void displayList(){
 		mCursor = dbAdapter.getAllActivity();
 		startManagingCursor(mCursor);
-		String[] from = new String[]{DBAdapter.KEY_ACTIVITY, DBAdapter.KEY_ACTIVITY_DATE, DBAdapter.KEY_ACTIVITY_MONEY};
+		String[] from = new String[]{DBAdapter.KEY_ACTIVITY_NAME, DBAdapter.KEY_ACTIVITY_DATE, DBAdapter.KEY_ACTIVITY_MONEY};
 		int[] to = new int[]{R.id.text1};
 		SimpleCursorAdapter activities = new SimpleCursorAdapter(this, R.layout.activity_row, mCursor, from, to);
 		setListAdapter(activities);

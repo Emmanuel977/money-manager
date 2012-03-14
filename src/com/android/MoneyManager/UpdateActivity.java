@@ -19,7 +19,7 @@ public class UpdateActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.update);
 
 		// get widget from update.xml
-		Button btnAdd = (Button) findViewById(R.id.update_button);
+		Button btnAdd = (Button) findViewById(R.id.Add_Button);
 		btnAdd.setOnClickListener(this);
 	}
 
