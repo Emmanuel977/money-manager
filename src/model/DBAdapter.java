@@ -12,20 +12,16 @@ public class DBAdapter {
 	// Logcat
 	public static String TAG = "HUNGDD";
 
-	// Fields name
-	public static final String KEY_ID = "_id";
-	public static final String KEY_ACTIVITY_NAME = "activityName";
-	public static final String KEY_ACTIVITY_DATE = "activityDate";
-	public static final String KEY_ACTIVITY_MONEY = "activityMoney";
-
 	// Database information
-	private static final String DATABASE_NAME = "MoneyManagerDB";
+	private static final String DATABASE_NAME = "MoneyManagerDB.db";
 	private static final String DATABASE_TABLE = "tblActivity";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 
 	// create database statement
-	private static final String DATABASE_CREATE = "create table tblActivity (_id integer primary key autoincrement, "
-			+ "activityName text not null, activityDate text not null, activityMoney int);";
+	// private static final String DATABASE_CREATE =
+	// "create table tblActivity (_id integer primary key autoincrement, "
+	// +
+	// "activityName text not null, activityDate text not null, activityMoney int);";
 
 	private final Context mContext;
 	private SQLiteDatabase mDB;
@@ -48,7 +44,7 @@ public class DBAdapter {
 	public DBAdapter open() {
 		mDBHelper = new DatabaseHelper(mContext, DATABASE_NAME, null,
 				DATABASE_VERSION);
-		mDB = mDBHelper.getWritableDatabase();
+		// mDB = mDBHelper.getWritableDatabase();
 		return this;
 	}
 
@@ -64,10 +60,11 @@ public class DBAdapter {
 			int money) {
 		ContentValues initialValue = new ContentValues();
 
-		initialValue.put(KEY_ACTIVITY_NAME, activityName);
-		initialValue.put(KEY_ACTIVITY_DATE, activityDate);
-		initialValue.put(KEY_ACTIVITY_MONEY, money);
+		initialValue.put(ITableColumns.NAME, activityName);
+		initialValue.put(ITableColumns.CTIME, activityDate);
+		initialValue.put(ITableColumns.COST, money);
 
+		mDB = mDBHelper.getWritableDatabase();
 		long rowID = mDB.insert(DATABASE_TABLE, null, initialValue);
 		// return rowID
 		return rowID;
@@ -79,9 +76,8 @@ public class DBAdapter {
 	 * @return Cursor object.
 	 */
 	public Cursor getAllActivity() {
-		return mDB.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_ACTIVITY_NAME,
-				KEY_ACTIVITY_DATE, KEY_ACTIVITY_MONEY }, null, null, null,
-				null, null);
+		mDB = mDBHelper.getReadableDatabase();
+		return mDB.query(DATABASE_TABLE, null, null, null, null, null, null);
 	}
 
 	/**
@@ -101,6 +97,7 @@ public class DBAdapter {
 
 		/**
 		 * Constructor.
+		 * 
 		 * @param context
 		 * @param name
 		 * @param factory
@@ -113,7 +110,14 @@ public class DBAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(DATABASE_CREATE);
+			StringBuilder sql = new StringBuilder("CREATE TABLE ");
+			sql.append(DATABASE_TABLE);
+			sql.append(" (" + ITableColumns.ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT, ");
+			sql.append(ITableColumns.NAME + " TEXT, ");
+			sql.append(ITableColumns.CTIME + " TEXT, ");
+			sql.append(ITableColumns.COST + " INTEGER);");
+			db.execSQL(sql.toString());
 			Log.i(TAG, "DB created");
 		}
 

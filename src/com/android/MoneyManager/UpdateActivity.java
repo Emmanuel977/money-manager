@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class UpdateActivity extends Activity implements OnClickListener {
 
@@ -42,6 +43,9 @@ public class UpdateActivity extends Activity implements OnClickListener {
 		dbAdapter.open();
 
 		// Insert to database
-		dbAdapter.insertActivity(activityName, sDate, iMoney);
+		long result = dbAdapter.insertActivity(activityName, sDate, iMoney);
+		if(result != -1){
+			Toast.makeText(this, "Insert successful rowID: " + result, Toast.LENGTH_SHORT).show();
+		}
 	}
 }
